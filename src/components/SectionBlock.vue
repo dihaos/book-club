@@ -1,13 +1,9 @@
 <template>
   <section class="mb-10">
     <h2 class="text-2xl font-semibold mb-4">{{ title }}</h2>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+    <div class="top-list">
       <template v-if="isLoading">
-        <div
-          v-for="n in 10"
-          :key="n"
-          class="animate-pulse h-60 bg-gray-300 rounded-lg"
-        />
+        <div v-for="n in 10" :key="n" class="skeleton-card" />
       </template>
       <div
         v-else
@@ -19,7 +15,7 @@
           v-if="book.cover_id"
           :src="`https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`"
           alt="cover"
-          class="w-full h-60 object-cover"
+          class="card-img"
         />
         <div class="p-2 text-sm">
           <p class="font-semibold line-clamp-2">{{ book.title }}</p>
@@ -62,10 +58,32 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.top-list {
+  display: flex;
+  gap: 30px;
+  overflow-x: auto;
+}
+
+.card-img {
+  width: 200px;
+  height: 300px;
+}
+
+.skeleton-card {
+  width: 200px;
+  height: 300px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  animation: pulse 1.5s infinite linear;
+}
+
+@keyframes pulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 </style>
